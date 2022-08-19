@@ -1,12 +1,12 @@
-# TascaS1.01
-Herencia y polimorfismo
 
-> n1ejercicio1
+# Herencia y polimorfismo
 
-Ejercicio para probar bloques de inicialización y bloques estáticos de Java
+n1ejercicio1
 
-> n1ejercicio2
+> Ejercicio para probar bloques de inicialización y bloques estáticos de Java
 
-Demostrar como invocar el método estático y el no estático desde el main() de la clase principal. 
+n1ejercicio2
 
->El resto de ejercicios se pone a prueba la herencia y el polimorfismo con diversas clases. 
+> Demostrar como invocar el método estático y el no estático desde el main() de la clase principal. 
+
+> El resto de ejercicios se pone a prueba la herencia y el polimorfismo con diversas clases. 
