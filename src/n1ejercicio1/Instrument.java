@@ -1,6 +1,6 @@
 package n1ejercicio1;
 
-public abstract class Instruments {
+public abstract class Instrument {
 	private String nombre;
 	private int precio;
 
