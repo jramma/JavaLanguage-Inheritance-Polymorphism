@@ -1,6 +1,6 @@
 package n1ejercicio1;
 
-public class TascaS1 {
+public class Main {
 
 	public static void main(String[] args) {
 		InstrumentDeVent flauta = new InstrumentDeVent("flauta", 28);
