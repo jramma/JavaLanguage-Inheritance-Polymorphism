@@ -10,7 +10,6 @@ public class Main {
 		// este ejercicio aÃºn no estÃ¡ acabado
 
 		ArrayList<Redactor> redactores = new ArrayList<Redactor>();
-		ArrayList<Noticia> noticias = new ArrayList<Noticia>();
 		int eleccion = 0;
 		do {
 			System.out.println("--------------------------------------");
@@ -18,82 +17,108 @@ public class Main {
 			System.out.println("1.- Introduir redactor.");
 			System.out.println("2.- Eliminar redactor.");
 			System.out.println("3.- Introduir notï¿½cia a un redactor.");
-			System.out.println("4.- Eliminar notï¿½cia (ha de demanar redactor i titular de la notï¿½cia).");
+			System.out.println("4.- Eliminar notï¿½cia.");
 			System.out.println("5.- Mostrar totes les notï¿½cies per redactor.");
 			System.out.println("6.- Calcular puntuaciï¿½ de la notï¿½cia.");
 			System.out.println("7.- Calcular preu-notï¿½cia.");
 			System.out.println("8.- Eixir.");
-			eleccion = menu(redactores, noticias);
+			eleccion = sc.nextInt();
+			sc.nextLine();
+
+			menu(redactores, eleccion);
 		} while (eleccion != 8);
 	}
 
-	private static int menu(ArrayList<Redactor> redactores, ArrayList<Noticia> noticias) {
-		int eleccion = 0;
-		do {
-			if (eleccion > 8 || eleccion < 1) {
-				System.out.println("Introduce un valor entre 1 y 8");
-			}
-			eleccion = sc.nextInt();
-		} while (eleccion > 8 || eleccion < 1);
+	private static void menu(ArrayList<Redactor> redactores, int eleccion) {
+
 		switch (eleccion) {
 		case 1:
-			altaRedactor(redactores, noticias);
+			altaRedactor(redactores);
 			break;
 		case 2:
 			eliminarRedactor(redactores);
 			break;
 		case 3:
-			introducirNoticiaAUnRedactor(redactores, noticias);
+			introducirNoticiaAUnRedactor(redactores);
 			break;
 		case 4:
-			eliminarNoticia(noticias);
+			eliminarNoticia(redactores);
 			break;
 		case 5:
-			mostrarNoticias(noticias);
+			mostrarNoticias(redactores);
 			break;
 		case 6:
-			calcularPuntuacionNoticia(noticias);
+			calcularPuntuacionNoticia(redactores);
 			break;
 		case 7:
-			calcularPrecioNoticia(noticias);
+			calcularPrecioNoticia(redactores);
 			break;
-		default:
+		case 8:
 			System.out.println("Eixint.");
+		default:
+			if (eleccion != 8)
+				System.out.println("Introduce un valor entre 1 y 8");
+
 		}
-		return eleccion;
 	}
 
-	private static void calcularPrecioNoticia(ArrayList<Noticia> noticias) {
-		Noticia noticia = buscadorNoticia(noticias);
-		if (noticia == null) {
-			System.out.println("La noticia no existe");
+	private static void calcularPrecioNoticia(ArrayList<Redactor> redactores) {
+		System.out.println("introduce el redactor del que desea calcular precio de la noticia:");
+		String nombre = sc.nextLine();
+		Redactor redactor = buscadorRedactor(redactores, nombre);
+		if (redactor == null) {
+			System.out.println("El redactor no existe");
 		} else {
+			Noticia noticia = buscadorNoticia(redactor.getNoticias());
+
 			noticia.calcularNoticia();
 		}
 	}
 
-	private static void calcularPuntuacionNoticia(ArrayList<Noticia> noticias) {
-		Noticia noticia = buscadorNoticia(noticias);
-		if (noticia == null) {
-			System.out.println("La noticia no existe");
+	private static void calcularPuntuacionNoticia(ArrayList<Redactor> redactores) {
+		System.out.println("introduce el redactor del que desea calcular puntuaciÃ³n de la noticia:");
+		String nombre = sc.nextLine();
+		Redactor redactor = buscadorRedactor(redactores, nombre);
+		if (redactor == null) {
+			System.out.println("El redactor no existe");
 		} else {
+			Noticia noticia = buscadorNoticia(redactor.getNoticias());
+
 			noticia.calcularPuntuacion();
 		}
 	}
 
-	private static void mostrarNoticias(ArrayList<Noticia> noticias) {
-		Noticia noticia = buscadorNoticia(noticias);
-		noticia.toString();
+	private static void mostrarNoticias(ArrayList<Redactor> redactores) {
+		System.out.println("introduce el redactor del que desea ver la noticia:");
+		String nombre = sc.nextLine();
+		Redactor redactor = buscadorRedactor(redactores, nombre);
+		if (redactor != null) {
+			for (int i = 0; i < redactor.getNoticias().size(); i++) {
+				Noticia noticia = redactor.getNoticias().get(i);
+				System.out
+						.println(noticia.getTitular().toString() + "\n *************** \n" + noticia.getText().toString());
+				System.out.println("\n \n ++++++++++++++++++++++++++++++++++");
+			}
+		}
+		System.out.println("----cerrando Mostrar noticia----");
+		System.out.println("\n\n\n");
 	}
 
-	private static void eliminarNoticia(ArrayList<Noticia> noticias) {
-		Noticia noticia = buscadorNoticia(noticias);
-		if (noticia == null) {
-			System.out.println("La noticia no existe");
+	private static void eliminarNoticia(ArrayList<Redactor> redactores) {
+		System.out.println("Introduce el nombre del redactor que tiene la noticia:");
+		String nombre = sc.nextLine();
+		Redactor redactor = buscadorRedactor(redactores, nombre);
+		if (redactor == null) {
+			System.out.println("el redactor no existe!!!");
 		} else {
-			System.out.println("La noticia siguiente noticia ha sido eliminada: \n" + noticia.toString());
-			noticias.remove(noticia);
+			Noticia noticia = buscadorNoticia(redactor.getNoticias());
+			if (noticia == null) {
+				System.out.println("La noticia no existe");
+			} else {
+				System.out.println("La siguiente noticia ha sido eliminada: \n" + noticia.toString());
+				redactor.getNoticias().remove(noticia);
 
+			}
 		}
 	}
 
@@ -104,30 +129,30 @@ public class Main {
 		int limite = noticias.size();
 		Noticia noticia = null;
 		while (i < limite && noticia == null) {
-			if (noticias.get(i).getTitular().equalsIgnoreCase(nombre)) {
-				noticia = noticias.get(i);
-			}
 			i++;
+			if (noticias.get(i - 1).getTitular().equalsIgnoreCase(nombre)) {
+				noticia = noticias.get(i - 1);
+			}
+
 		}
 
 		return noticia;
 	}
 
-	private static void introducirNoticiaAUnRedactor(ArrayList<Redactor> redactores, ArrayList<Noticia> noticias) {
-		System.out.println("¿Ha qué redactor desea añadir la noticia?");
+	private static void introducirNoticiaAUnRedactor(ArrayList<Redactor> redactores) {
+		System.out.println("ï¿½A que' redactor desea introducir la noticia?");
 		String nombre = sc.nextLine();
 		Redactor redactor = buscadorRedactor(redactores, nombre);
 		if (redactor == null) {
 			System.out.println("El redactor no existe");
 		} else {
-
-			tipoNoticia(noticias);
-			System.out.println("La noticia ha sido añadida. ");
+			tipoNoticia(redactor);
+			System.out.println("La noticia ha sido introducida. ");
 		}
 	}
 
-	private static void tipoNoticia(ArrayList<Noticia> noticias) {
-		System.out.println("¿cuál es el titular de la noticia?");
+	private static void tipoNoticia(Redactor redactor) {
+		System.out.println("ï¿½cuï¿½l es el titular de la noticia?");
 		String titular = sc.nextLine();
 		System.out.println("Introduzca el texto de la noticia:");
 		String text = sc.nextLine();
@@ -166,24 +191,27 @@ public class Main {
 		switch (eleccion) {
 		case 1:
 			Futbol futbol = new Futbol(titular, text, precio, puntuacion, competicion, club, jugador);
-			noticias.add(futbol);
+			redactor.getNoticias().add(futbol);
+
 			break;
 		case 2:
 			Basket basket = new Basket(titular, text, precio, puntuacion, competicion, club);
-			noticias.add(basket);
+			redactor.getNoticias().add(basket);
 			break;
 		case 3:
 			Tenis tenis = new Tenis(titular, text, precio, puntuacion, competicion, jugador);
-			noticias.add(tenis);
+			redactor.getNoticias().add(tenis);
 			break;
 		case 4:
 			F1 f1 = new F1(titular, text, precio, puntuacion, escuderia);
-			noticias.add(f1);
+			redactor.getNoticias().add(f1);
 			break;
 		default:
 			Motociclismo moto = new Motociclismo(titular, text, precio, puntuacion, escuderia);
-			noticias.add(moto);
+			redactor.getNoticias().add(moto);
 		}
+
+		System.out.println("Noticia aÃ±adida!");
 	}
 
 	private static void eliminarRedactor(ArrayList<Redactor> redactores) {
@@ -198,7 +226,7 @@ public class Main {
 		}
 	}
 
-	private static void altaRedactor(ArrayList<Redactor> redactores, ArrayList<Noticia> noticias) {
+	private static void altaRedactor(ArrayList<Redactor> redactores) {
 		System.out.println("Introduzca el nombre del redactor a dar de alta");
 		String nombre = sc.nextLine();
 		Redactor redactor = buscadorRedactor(redactores, nombre);
@@ -206,12 +234,13 @@ public class Main {
 
 			System.out.println("Introduzca el dni del redactor: ");
 			String dni = sc.nextLine();
-			Noticia noticias1[] = {};
-			Redactor redactor1 = new Redactor(nombre, dni, noticias1);
+			ArrayList<Noticia> noticias = new ArrayList<Noticia>();
+			Redactor redactor1 = new Redactor(nombre, dni, noticias);
 			redactores.add(redactor1);
 		} else {
 			System.out.println("El redactor ya existe.");
 		}
+		System.out.println("Redactor aÃ±adido ! ! ! ! ! ! !");
 
 	}
 
@@ -220,10 +249,10 @@ public class Main {
 		int limite = redactores.size();
 		Redactor redactor = null;
 		while (i < limite && redactor == null) {
-			if (redactores.get(i).getNombre().equalsIgnoreCase(nombre)) {
-				redactor = redactores.get(i);
-			}
 			i++;
+			if (redactores.get(i - 1).getNombre().equalsIgnoreCase(nombre)) {
+				redactor = redactores.get(i - 1);
+			}
 		}
 		return redactor;
 	}

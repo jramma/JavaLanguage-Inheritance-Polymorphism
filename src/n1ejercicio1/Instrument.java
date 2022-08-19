@@ -11,7 +11,7 @@ public abstract class Instrument {
 		System.out.println("static");
 	}
 
-	public Instruments(String nombre, int precio) {
+	public Instrument(String nombre, int precio) {
 
 		this.nombre = nombre;
 		this.precio = precio;

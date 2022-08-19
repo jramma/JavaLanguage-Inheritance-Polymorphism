@@ -1,14 +1,14 @@
 package n3ejercicio1;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Redactor {
 	private String nombre;
 	private final String dni;
 	private static int sueldo = 1500;
-	private Noticia noticias[];
+	private  ArrayList <Noticia> noticias;
 
-	public Redactor(String nombre, String dni, Noticia[] noticias) {
+	public Redactor(String nombre, String dni, ArrayList<Noticia> noticias) {
 		this.nombre = nombre;
 		this.dni = dni;
 		this.noticias = noticias;
@@ -30,21 +30,21 @@ public class Redactor {
 		Redactor.sueldo = sueldo;
 	}
 
-	public Noticia[] getNoticias() {
+	public ArrayList<Noticia> getNoticias() {
 		return noticias;
 	}
 
-	public void setNoticias(Noticia[] noticias) {
+	public void setNoticias(ArrayList<Noticia> noticias) {
 		this.noticias = noticias;
 	}
 
 	public String getDni() {
 		return dni;
 	}
-
+		
 	@Override
 	public String toString() {
-		return "Redactor [nombre=" + nombre + ", dni=" + dni + ", noticias=" + Arrays.toString(noticias) + "]";
+		return "Redactor [nombre=" + nombre + ", dni=" + dni + ", noticias=" + noticias.toString() + "]";
 	}
 
 }

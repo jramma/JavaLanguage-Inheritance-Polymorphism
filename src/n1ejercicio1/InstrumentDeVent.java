@@ -4,7 +4,7 @@ public class InstrumentDeVent extends Instrument {
 
 	public InstrumentDeVent(String nombre, int precio) {
 		super(nombre, precio);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
