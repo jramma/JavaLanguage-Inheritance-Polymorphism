@@ -1,6 +1,6 @@
 package n1ejercicio1;
 
-public class InstrumentDeCorda extends Instruments {
+public class InstrumentDeCorda extends Instrument {
 
 	public InstrumentDeCorda(String nombre, int precio) {
 		super(nombre, precio);
